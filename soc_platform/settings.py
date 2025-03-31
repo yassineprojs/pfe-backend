@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'users.apps.UsersConfig',
     'shifts.apps.ShiftsConfig',
-    'django.contrib.postgres',
+    'incidents.apps.IncidentsConfig',
+    'clients.apps.ClientsConfig',
 ]
+LOGIN_REDIRECT_URL = '/incidents/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

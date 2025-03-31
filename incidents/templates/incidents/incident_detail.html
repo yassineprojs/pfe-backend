@@ -1,0 +1,14 @@
+<h1>Incident #{{ incident.id }}</h1>
+<p>Status: {{ incident.status }}</p>
+<h2>Tickets</h2>
+<ul>
+  {% for ticket in tickets %}
+  <li>
+    {{ ticket.description }} - {{ ticket.status }}
+    <a href="{% url 'assign_ticket' ticket.id %}">Assign</a>
+    <a href="{% url 'start_work' ticket.id %}">Start</a>
+    <a href="{% url 'pause_work' ticket.id %}">Pause</a>
+    <!-- Complete Work needs a form -->
+  </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,11 @@
+<h1>Incidents</h1>
+<ul>
+  {% for incident in incidents %}
+  <li>
+    <a href="{% url 'incident_detail' incident.pk %}">{{ incident }}</a> - {{
+    incident.status }}
+  </li>
+  {% empty %}
+  <li>No incidents found.</li>
+  {% endfor %}
+</ul>

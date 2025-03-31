@@ -40,7 +40,7 @@ class Analyst(models.Model):
 
     @property
     def current_workload(self):
-        return self.ticket_set.filter(
+        return self.assigned_tickets.filter(
             models.Q(status='New') | 
             models.Q(status='Assigned') | 
             models.Q(status='InProgress')
