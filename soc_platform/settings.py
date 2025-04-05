@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'shifts.apps.ShiftsConfig',
     'incidents.apps.IncidentsConfig',
     'clients.apps.ClientsConfig',
+    'threat_intelligence.apps.ThreatIntelligenceConfig',
+    
 ]
 LOGIN_REDIRECT_URL = '/incidents/'
 
