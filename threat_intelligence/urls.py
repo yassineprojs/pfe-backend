@@ -4,6 +4,7 @@ from . import views
 app_name = 'threat_intel'
 
 urlpatterns = [
+    path('', views.threat_intel_home, name='threat_intel_home'), 
     path('iocs/', views.ioc_list, name='ioc_list'),
     path('iocs/<int:ioc_id>/', views.ioc_detail, name='ioc_detail'),
     path('incidents/<int:incident_id>/add-ioc/', views.add_ioc_to_incident, name='add_ioc_to_incident'),

@@ -5,6 +5,13 @@ from .models import IOC, Playbook, PlaybookExecution,PlaybookStepExecution
 from incidents.models import Incident, Analysis, Ticket
 import json
 
+
+@login_required
+def threat_intel_home(request):
+    return render(request, 'threat_intelligence/threat_intel_home.html', {
+        'title': 'Threat Intelligence Dashboard'
+    })
+
 @login_required
 def ioc_list(request):
     iocs = IOC.objects.all().order_by('-created_at')

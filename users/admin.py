@@ -5,6 +5,8 @@ from .models import CustomUser, Analyst, Admin
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ('email', 'first_name', 'last_name', 'phone_number')
+    search_fields = ('email', 'first_name', 'last_name')
+    list_filter = ('first_name',)
 
 @admin.register(Analyst)
 class AnalystAdmin(admin.ModelAdmin):
