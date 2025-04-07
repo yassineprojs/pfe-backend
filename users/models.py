@@ -15,7 +15,6 @@ class Analyst(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     current_shift = models.ForeignKey('shifts.Shift', on_delete=models.SET_NULL, null=True, blank=True, related_name='analysts')
     max_capacity = models.PositiveIntegerField(default=5)
-    specialization = ArrayField(models.CharField(max_length=100), blank=True, default=list)
 
     @property
     def current_workload(self):
@@ -31,7 +30,6 @@ class Analyst(models.Model):
 
 class Admin(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
-    permissions = ArrayField(models.CharField(max_length=50), blank=True, default=list)
 
     def __str__(self):
         return f"Admin: {self.user.get_full_name()}"
