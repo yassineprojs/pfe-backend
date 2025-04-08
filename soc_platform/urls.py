@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('incidents/', include('incidents.urls')),
     path('threat-intel/', include(('threat_intelligence.urls', 'threat_intel'), namespace='threat_intel')),
+    path('users/', include('users.urls', namespace='users')),
+
 ]

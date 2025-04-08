@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import CustomUser, Analyst, Admin
+from .models import CustomUser, Analyst, Admin, PendingUser
 from django.utils.safestring import mark_safe
 from django.urls import reverse
 from django.contrib.auth.models import Group
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 admin.site.unregister(Group)
@@ -27,17 +29,17 @@ class CustomUserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal Info', {'fields': ('first_name', 'last_name', 'email', 'phone_number')}),
-        ('Status', {'fields': ('is_staff', 'is_active')}),
+        ('Status', {'fields': ('is_staff', 'is_active','is_approved')}),
         ('Dates', {'fields': ('date_joined',)}),
     )
     # Fields when adding a user
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'phone_number', 'is_staff', 'is_active')}
+            'fields': ('username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'phone_number', 'is_staff', 'is_active', 'is_approved')}
         ),
     )
-    list_display = ('username', 'email', 'first_name', 'last_name', 'phone_number', 'get_profile_link')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'phone_number','is_approved', 'get_profile_link')
     search_fields = ('username', 'email', 'first_name', 'last_name')
     inlines = [AnalystInline, AdminInline]  # Show both inlines
 
@@ -50,6 +52,18 @@ class CustomUserAdmin(BaseUserAdmin):
             return mark_safe(f'<a href="{url}">Admin Profile</a>')
         return "No Profile"
     get_profile_link.short_description = 'Profile'
+
+# PendingUser admin
+@admin.register(PendingUser)
+class PendingUserAdmin(admin.ModelAdmin):
+    list_display = ('email', 'role', 'requested_at', 'approve_link')
+    search_fields = ('email',)
+    list_filter = ('role',)
+
+    def approve_link(self, obj):
+        url = reverse("admin:users_pendinguser_approve", args=[obj.pk])
+        return mark_safe(f'<a href="{url}">Approve</a>')
+    approve_link.short_description = 'Approve'
 
 # Analyst admin
 @admin.register(Analyst)
