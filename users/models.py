@@ -7,6 +7,7 @@ import uuid
 
 
 class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{8,15}$', message="Phone number must be entered in the format: '+99999999'.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True)
     is_approved = models.BooleanField(default=False)

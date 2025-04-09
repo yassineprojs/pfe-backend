@@ -38,7 +38,7 @@ class Incident(models.Model):
     def assign_to_analyst(self, analyst):
         if self.ticket and self.ticket.status in [TicketStatus.NEW, TicketStatus.ASSIGNED]:
             self.ticket.assign_to_analyst(analyst)
-            self.status = IncidentStatus.ASSIGNED
+            self.status = IncidentStatus.ASSIGNED.value
             self.save()
             return self.ticket
         return None
@@ -46,7 +46,7 @@ class Incident(models.Model):
     def start_analysis(self):
         if self.ticket:
             self.ticket.start_work()
-            self.status = IncidentStatus.IN_PROGRESS
+            self.status = IncidentStatus.IN_PROGRESS.value
             self.save()
 
     def add_analysis(self, analyst, notes):
@@ -265,13 +265,23 @@ def update_metrics(sender, instance, created, **kwargs):
 
 def assign_ticket_to_analyst(ticket):
     current_time = timezone.now()
-    available_analysts = Analyst.objects.filter(
+    # Get analysts in the current shift
+    analysts_in_shift = Analyst.objects.filter(
         current_shift__start_time__lte=current_time,
-        current_shift__end_time__gte=current_time,
-        current_workload__lt=models.F('max_capacity')
-    ).order_by('current_workload')
-    if available_analysts.exists():
-        analyst = available_analysts.first()
-        ticket.assign_to_analyst(analyst)
-        return analyst
-    return None
+        current_shift__end_time__gte=current_time
+    )
+    if not analysts_in_shift.exists():
+        return None
+
+    # Compute workload in Python and find an available analyst
+    available_analysts = [
+        analyst for analyst in analysts_in_shift
+        if analyst.current_workload < analyst.max_capacity
+    ]
+    if not available_analysts:
+        return None
+
+    # Sort by workload and pick the analyst with the least
+    analyst = min(available_analysts, key=lambda a: a.current_workload)
+    ticket.assign_to_analyst(analyst)
+    return analyst

@@ -107,3 +107,9 @@ body {
     top: 70%;
   }
 }
+
+.learn-more {
+  margin-left: 1rem;
+  color: #3498db;
+  text-decoration: none;
+}

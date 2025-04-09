@@ -1,17 +1,17 @@
 from django.db import models
 
 class IncidentStatus(models.TextChoices):
-    OPEN = 'open', 'Open'
+    OPEN = 'open', 'Open', 
     ASSIGNED = 'assigned', 'Assigned'
     IN_PROGRESS = 'in_progress', 'In Progress'
     CLOSED = 'closed', 'Closed'
 
 class TicketStatus(models.TextChoices):
-    NEW = 'new', 'New'
-    ASSIGNED = 'assigned', 'Assigned'
-    IN_PROGRESS = 'in_progress', 'In Progress'
-    PAUSED = 'paused', 'Paused'
-    COMPLETED = 'completed', 'Completed'
+    NEW = 'new','NEW'
+    ASSIGNED = 'assigned','ASSIGNED'
+    IN_PROGRESS = 'in_progress', 'IN_PROGRESS'
+    PAUSED = 'paused', 'PAUSED'
+    COMPLETED = 'completed', 'COMPLETED'
 
 class SeverityChoices(models.TextChoices):
     LOW = 'low', 'Low'

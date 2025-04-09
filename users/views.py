@@ -10,6 +10,13 @@ import uuid
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from django.urls import reverse
+
+
+
+
 
 def request_access(request):
     if request.method == 'POST':
@@ -28,6 +35,7 @@ def request_access(request):
 
 def register(request, token):
     pending_user = get_object_or_404(PendingUser, token=token)
+    user = CustomUser.objects.get(email=pending_user.email)
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -35,11 +43,13 @@ def register(request, token):
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
             return redirect('users:register', token=token)
-        user = CustomUser.objects.create_user(username=username, email=pending_user.email, password=password, is_approved=True)
+        user.username = username
+        user.set_password(password)
+        user.save()
         if pending_user.role == 'Analyst':
-            Analyst.objects.create(user=user)
+            Analyst.objects.get_or_create(user=user)
         else:
-            Admin.objects.create(user=user)
+            Admin.objects.get_or_create(user=user)
         pending_user.delete()
         messages.success(request, "Account created successfully. Please log in.")
         return redirect('users:login')
@@ -96,7 +106,24 @@ def login_api(request):
     username = request.data.get('username')
     password = request.data.get('password')
     user = authenticate(username=username, password=password)
-    if user:
-        login(request, user)
-        return Response({'message': 'Login successful'}, status=200)
-    return Response({'error': 'Invalid credentials'}, status=400)
+    if user and user.is_approved:
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({
+            'message': 'Login successful',
+            'token': token.key,
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'isAnalyst': hasattr(user, 'analyst'),
+                'isAdmin': hasattr(user, 'admin')
+            }
+        }, status=200)
+    return Response({'error': 'Invalid credentials or account not approved'}, status=400)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout_api(request):
+    request.user.auth_token.delete()  # Delete token
+    logout(request)
+    return Response({'message': 'Logged out successfully'}, status=200)

@@ -48,8 +48,16 @@ INSTALLED_APPS = [
     'threat_intelligence.apps.ThreatIntelligenceConfig',
     'rest_framework',
     'corsheaders',
+    'rest_framework.authtoken',
     
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React’s dev server
