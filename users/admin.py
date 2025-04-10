@@ -61,7 +61,7 @@ class PendingUserAdmin(admin.ModelAdmin):
     list_filter = ('role',)
 
     def approve_link(self, obj):
-        url = reverse("admin:users_pendinguser_approve", args=[obj.pk])
+        url = reverse("users:approve_user", args=[obj.pk])
         return mark_safe(f'<a href="{url}">Approve</a>')
     approve_link.short_description = 'Approve'
 

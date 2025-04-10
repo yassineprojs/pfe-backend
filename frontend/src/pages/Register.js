@@ -1,23 +1,37 @@
-import React, { useState, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+// src/Register.js
+import React, { useState } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import axios from "axios";
 import backgroundImage from "../assets/bg.png";
 import eyLogo from "../assets/ey.png";
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { token } = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(username, password);
-    if (success) {
-      navigate("/dashboard");
-    } else {
-      setError("Invalid credentials or account not approved.");
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    try {
+      await axios.post(`http://localhost:8000/users/api/register/${token}/`, {
+        username,
+        password,
+        confirm_password: confirmPassword,
+      });
+      navigate("/login");
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error);
+      } else {
+        setError("Registration failed. Invalid token or server error.");
+      }
     }
   };
 
@@ -28,7 +42,7 @@ const Login = () => {
     >
       <div className="inner-container">
         <img src={eyLogo} alt="EY Logo" className="logo" />
-        <h2 className="heading">Login</h2>
+        <h2 className="heading">Register</h2>
         {error && <p className="error-text">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div>
@@ -49,14 +63,23 @@ const Login = () => {
               className="input-field"
             />
           </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="input-field"
+            />
+          </div>
           <button type="submit" className="button">
-            Login
+            Register
           </button>
         </form>
         <p className="text-center">
-          Need an account?{" "}
-          <Link to="/request-access" className="link-text">
-            Request access here
+          Already have an account?{" "}
+          <Link to="/login" className="link-text">
+            Login here
           </Link>
         </p>
       </div>
@@ -64,4 +87,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

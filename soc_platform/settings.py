@@ -63,6 +63,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React’s dev server
 ]
 
+FRONTEND_URL = 'http://localhost:3000'  
+
+
+
 LOGIN_REDIRECT_URL = '/incidents/'
 
 MIDDLEWARE = [
