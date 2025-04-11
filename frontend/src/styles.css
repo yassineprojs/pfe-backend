@@ -1,118 +1,64 @@
-/* src/styles.css */
-
-/* Define custom colors using CSS variables */
+/* Global CSS Variables */
 :root {
-  --eyYellow: #ffc107;
-  --eyBlack: #1a1a1a;
-  --eyGray: #f5f5f5;
+  /* EY Brand Colors */
+  --ey-yellow: #ffe600;
+  --ey-dark: #2e2e38;
+  --ey-black: #000000;
+  --ey-white: #ffffff;
+  --ey-light: #f6f6fa;
+  --ey-light-gray: #e0e0e0;
+  --ey-gray: #757575;
+  --ey-dark-gray: #4d4d4d;
+
+  /* Enhanced color palette */
+  --ey-yellow-glow: rgba(255, 230, 0, 0.2);
+  --ey-yellow-light: rgba(255, 230, 0, 0.1);
+  --ey-dark-glow: rgba(46, 46, 56, 0.15);
+
+  /* Status colors */
+  --severity-high: #e53935;
+  --severity-medium: #fb8c00;
+  --severity-low: #43a047;
+  --status-new: #1e88e5;
+  --status-assigned: #8e24aa;
+  --status-in-progress: #00897b;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-yellow: 0 8px 16px rgba(255, 230, 0, 0.2);
+
+  /* Animations */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.5s ease;
 }
 
-/* Global body styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Reset and base styles */
 body {
   margin: 0;
   font-family: "Helvetica", "Arial", sans-serif;
   background-color: var(--eyGray);
 }
 
-/* Full-screen background with centered content */
-.full-screen-bg {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  background-position: center;
-}
-
-/* Inner container for content */
-.inner-container {
-  text-align: center;
-  padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-}
-
-/* Logo styling */
-.logo {
-  margin: 0 auto 1.5rem;
-  width: 8rem;
-}
-
-/* Heading styles */
-.heading {
-  font-size: 2.25rem;
-  font-weight: bold;
-  color: var(--eyBlack);
-  margin-bottom: 1rem;
-}
-
-/* Paragraph text */
-.text {
-  font-size: 1.125rem;
-  color: #666;
-  margin-bottom: 1.5rem;
-}
-
-/* Form input fields */
-.input-field {
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
-  transition: border-color 0.2s;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: var(--eyYellow);
-  box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.5);
-}
-
-/* Buttons */
-.button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--eyYellow);
-  color: var(--eyBlack);
-  font-weight: 600;
-  border-radius: 9999px;
-  transition: background-color 0.3s;
-  border: none;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-color: #e0a800;
-}
-
-/* Link text */
-.link-text {
-  color: var(--eyYellow);
-  text-decoration: none;
-}
-
-.link-text:hover {
-  text-decoration: underline;
-}
-
-/* Center text */
+/* Common text styles */
 .text-center {
   text-align: center;
-  margin-top: 1rem;
-  color: #666;
 }
 
-/* Error message */
 .error-text {
-  color: #ef4444;
+  color: var(--errorRed);
   margin-bottom: 1rem;
 }
 
 .success-text {
-  color: #4caf50;
+  color: var(--successGreen);
   margin-bottom: 1rem;
 }

@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import backgroundImage from "../assets/bg.png";
 import eyLogo from "../assets/ey.png";
+import "./auth.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");

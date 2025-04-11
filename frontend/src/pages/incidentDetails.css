@@ -1,0 +1,130 @@
+/* Incident details page styles */
+.incident-details {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.incident-details h1 {
+  color: var(--eyBlack);
+  margin-bottom: 20px;
+}
+
+.incident-details h3 {
+  margin-top: 20px;
+  color: var(--eyBlack);
+}
+
+/* Incident info section */
+.incident-info {
+  background-color: white;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.incident-info p {
+  margin: 8px 0;
+}
+
+/* SLA timer styles */
+.sla-timer {
+  font-weight: bold;
+}
+
+.sla-timer.warning {
+  color: var(--warningOrange);
+}
+
+.sla-timer.overdue {
+  color: var(--errorRed);
+}
+
+/* Action buttons */
+.actions {
+  margin-bottom: 20px;
+}
+
+.actions button {
+  margin: 0 10px 10px 0;
+  padding: 8px 16px;
+  background-color: var(--eyBlue);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background-color: #005cbf;
+}
+
+/* Analysis section */
+.analysis-section {
+  margin-bottom: 20px;
+}
+
+.analysis-section textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+/* Classification buttons */
+.classification-buttons {
+  margin-top: 10px;
+}
+
+.classification-buttons button {
+  margin: 0 10px 10px 0;
+  padding: 8px 16px;
+  background-color: var(--successGreen);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.classification-buttons button:hover {
+  background-color: #66bb6a;
+}
+
+/* Playbooks section */
+.playbooks-section {
+  margin-bottom: 20px;
+}
+
+.playbooks-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.playbooks-section li {
+  margin: 5px 0;
+}
+
+.playbooks-section a {
+  color: var(--eyBlue);
+  text-decoration: none;
+}
+
+.playbooks-section a:hover {
+  text-decoration: underline;
+}
+
+/* Analyses history */
+.analyses-history .analysis-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+/* Error messages */
+.error {
+  color: var(--errorRed);
+  font-weight: bold;
+  margin-top: 10px;
+}

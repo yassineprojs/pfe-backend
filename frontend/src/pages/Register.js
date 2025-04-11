@@ -4,6 +4,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import backgroundImage from "../assets/bg.png";
 import eyLogo from "../assets/ey.png";
+import "./auth.css";
 
 const Register = () => {
   const [username, setUsername] = useState("");
